@@ -1,14 +1,22 @@
 const welcomeMessage = document.getElementById("welcomeMessage");
 const btnEliminar = document.getElementById("btnEliminar");
 const alertaValidacionNombre = document.getElementById("alertValidacionNombre");
-const alertaValidacion = document.getElementById("alertValidacion");
+const alertaValidacion = document.getElementById("alertaValidacion");
 
-
-window.addEventListener("load", function(event){
-    if(this.localStorage.getItem("userName") !=null)
-        alertaValidacion.innerHTML = `Hola ${userName}, bienvenido/a de nuevo`;
-        alertaValidacionNombre.style.display="block"
-})
+window.addEventListener("load", function(event) {
+    event.preventDefault();
+    
+    // Verificar si hay un nombre en localStorage
+    const userName = this.localStorage.getItem("userName");
+    if (userName !== null) {
+        welcomeMessage.innerHTML = `Hola ${userName}, bienvenido/a de nuevo`;
+        alertaValidacion.style.display = "none"; // Ocultar alerta si hay nombre
+    } else {
+        // Si no hay nombre, mostrar alerta
+        alertaValidacionNombre.innerHTML = "Nombre eliminado. Por favor, regresa a la página de inicio y coloca un nombre.";
+        alertaValidacion.style.display = "block"; // Mostrar alerta
+    }
+});
 
 
 btnEliminar.addEventListener("click", function(event) {
@@ -17,7 +25,7 @@ btnEliminar.addEventListener("click", function(event) {
     welcomeMessage.innerHTML = ""; // Limpiar el mensaje de bienvenida
     alertaValidacionNombre.innerHTML = "Nombre eliminado. Por favor, regresa a la página de inicio y coloca un nombre.";
     alertaValidacion.style.display = "block"; // Mostrar alerta después de eliminar
-    // location.href = "index.html";
+    // location.href = "index.html"; // Puedes descomentar esto si deseas redirigir
     history.go(0); // Recargar la página
 });
  
